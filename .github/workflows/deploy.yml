@@ -1,0 +1,39 @@
+name: Deploy to AWS S3 (Academy)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+
+    # Vite 기반 React 앱이므로 브라우저가 읽을 수 있도록 HTML/JS/CSS로 빌드하는 과정이 필요합니다.
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build project
+      run: npm run build
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} # AWS Academy 필수 항목
+        aws-region: us-east-1 # AWS Academy 기본 리전
+
+    # 빌드된 결과물(dist 폴더)을 사용자가 지정해주신 S3 버킷에 동기화합니다.
+    - name: Deploy to S3
+      run: |
+        aws s3 sync dist/ s3://mybucket-20263594-601312212719-us-east-1-an --delete
