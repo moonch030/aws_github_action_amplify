@@ -1,16 +1,38 @@
-# React + Vite
+# React AWS S3 Deployment with GitHub Actions (Academy)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+이 프로젝트는 Vite를 사용하여 구축된 React 애플리케이션이며, GitHub Actions를 통해 AWS Academy의 S3 버킷으로 자동 배포되는 CI/CD 파이프라인이 설정되어 있습니다.
 
-Currently, two official plugins are available:
+## 🚀 시작하기
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 로컬 실행 방법
 
-## React Compiler
+1. 의존성 설치:
+   ```bash
+   npm install
+   ```
+2. 개발 서버 실행:
+   ```bash
+   npm run dev
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ☁️ AWS S3 배포 가이드 (AWS Academy 환경)
 
-## Expanding the ESLint configuration
+이 레포지토리는 코드가 `main` 브랜치에 Push될 때 자동으로 빌드되어 S3 버킷에 배포되도록 구성되어 있습니다. (`.github/workflows/deploy.yml` 파일 참조)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 필수 세팅: GitHub Secrets
+
+AWS Academy를 통한 배포를 성공하기 위해서는 반드시 GitHub Repository의 **Settings > Secrets and variables > Actions** 에 다음 3개의 시크릿을 등록해야 합니다.
+
+* `AWS_ACCESS_KEY_ID`: AWS Academy Learner Lab의 "AWS Details"에서 복사한 값
+* `AWS_SECRET_ACCESS_KEY`: AWS Academy Learner Lab의 "AWS Details"에서 복사한 값
+* `AWS_SESSION_TOKEN`: AWS Academy Learner Lab의 "AWS Details"에서 복사한 값
+
+> **⚠️ 중요:** AWS Academy의 세션 토큰은 3~4시간마다 만료됩니다.
+> 만료 시간이 지난 후 재배포를 하려면 Learner Lab에 다시 접속하여 갱신된 값으로 GitHub Secrets를 업데이트해야 합니다.
+
+### 배포 과정 (CI/CD)
+
+1. 코드를 수정하고 커밋합니다.
+2. `main` 브랜치로 커밋을 Push합니다.
+3. GitHub Actions 탭에서 워크플로우 진행 상황을 확인합니다.
+4. 배포가 완료되면 AWS S3의 웹 사이트 엔드포인트 주소를 통해 업데이트된 내용을 확인합니다.
