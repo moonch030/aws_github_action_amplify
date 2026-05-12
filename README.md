@@ -37,3 +37,5 @@
 > 본 프로젝트는 교육용 환경인 AWS Academy를 기반으로 구축되었습니다. 
 > AWS Academy의 자격 증명(Session Token)은 발급 후 **최대 4시간 동안만 유효**합니다. 
 > 세션 만료 후 재배포를 원하시는 경우 Learner Lab 환경을 재시작하고 새로운 Token 값으로 GitHub Secret의 `AWS_SESSION_TOKEN` 등을 업데이트해야 정상 작동합니다.
+
+AWS URL : https://main.d1c44naj3vbg23.amplifyapp.com
