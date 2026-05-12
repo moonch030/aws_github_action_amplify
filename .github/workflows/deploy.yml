@@ -38,4 +38,4 @@ jobs:
     # 빌드된 결과물(dist 폴더)을 사용자가 지정해주신 S3 버킷에 동기화합니다.
     - name: Deploy to S3
       run: |
-        aws s3 sync dist/ s3://mybucket-20263594-601312212719-us-east-1-an --delete
+        aws s3 sync dist/ s3://aws-github-action-amplify-601312212719-us-east-1-an --delete
